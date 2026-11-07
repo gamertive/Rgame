@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Round Shooter 2.0</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="menu">
+    <h1>🎯 ROUND SHOOTER 2.0</h1>
+    <p>Мультиплеер • Боссы • Способности • Ранги</p>
+    <input id="nameInput" type="text" placeholder="Ваше имя" maxlength="16">
+    <button id="playBtn" type="button">▶ ИГРАТЬ</button>
+    <button id="settingsBtn" type="button" class="secondary">⚙ Настройки</button>
+    <div id="connectionStatus" class="status">⏳ Подключение...</div>
+    <div class="info">
+      <b>Управление:</b> WASD — движение, Мышь — прицел, ЛКМ — стрельба<br>
+      <b>Способности:</b> Q — рывок, E — щит, F — граната<br>
+      <b>Цель:</b> Побеждай в раундах, побеждай боссов, повышай ранг!
+    </div>
+  </div>
+
+  <div id="settings" class="hidden">
+    <h2>⚙ Настройки</h2>
+    <label>🔊 Громкость музыки: <input type="range" id="musicVol" min="0" max="100" value="30"></label>
+    <label>🔉 Громкость эффектов: <input type="range" id="sfxVol" min="0" max="100" value="70"></label>
+    <label>🖱 Чувствительность: <input type="range" id="sensitivity" min="50" max="200" value="100"></label>
+    <label><input type="checkbox" id="particles" checked> ✨ Частицы</label>
+    <label><input type="checkbox" id="musicOn" checked> 🎵 Музыка</label>
+    <button id="closeSettings" type="button">Закрыть</button>
+  </div>
+
+  <!-- ВАЖНО: tabindex для получения фокуса клавиатуры -->
+  <canvas id="game" width="1200" height="700" tabindex="0"></canvas>
+
+  <div id="hud">
+    <div id="roundInfo">
+      <div id="mapName">🏟️ Арена</div>
+      <div>Раунд <span id="roundNum">0</span> • <span id="timeLeft">0</span>с</div>
+    </div>
+    <div id="rankInfo">
+      <div id="rankName">🥉 Bronze</div>
+      <div id="xpBar"><div id="xpFill"></div></div>
+      <div id="xpText">0 XP</div>
+    </div>
+    <div id="leaderboard"></div>
+  </div>
+
+  <div id="bottomHud">
+    <div id="hpBar"><div id="hpFill"></div><span id="hpText">100/100</span></div>
+    <div id="abilities">
+      <div class="ability" id="abDash" data-key="Q" data-name="Рывок">
+        <div class="ab-icon">💨</div>
+        <div class="ab-cd"></div>
+      </div>
+      <div class="ability" id="abShield" data-key="E" data-name="Щит">
+        <div class="ab-icon">🛡️</div>
+        <div class="ab-cd"></div>
+      </div>
+      <div class="ability" id="abGrenade" data-key="F" data-name="Граната">
+        <div class="ab-icon">💣</div>
+        <div class="ab-cd"></div>
+      </div>
+    </div>
+    <div id="upgrades"></div>
+  </div>
+
+  <div id="bossHud" class="hidden">
+    <div id="bossName">👹 БОСС</div>
+    <div id="bossHpBar"><div id="bossHpFill"></div></div>
+    <div id="bossHpText"></div>
+  </div>
+
+  <div id="events"></div>
+
+  <div id="roundEnd" class="hidden">
+    <h2 id="endTitle">Раунд окончен!</h2>
+    <div id="finalBoard"></div>
+    <p id="endSub"></p>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="sounds.js"></script>
+  <script src="settings.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
