@@ -1,0 +1,194 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: radial-gradient(circle at center, #1a1a3e 0%, #0a0a1e 100%);
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#menu, #settings {
+  position: absolute;
+  z-index: 100;
+  background: rgba(20,20,40,0.97);
+  padding: 40px;
+  border-radius: 16px;
+  text-align: center;
+  border: 2px solid #4a90e2;
+  box-shadow: 0 0 60px rgba(74,144,226,0.4);
+  min-width: 420px;
+}
+#menu h1 { font-size: 42px; margin-bottom: 10px; color: #4a90e2; text-shadow: 0 0 20px #4a90e2; }
+#menu p { margin-bottom: 20px; color: #aaa; }
+#settings h2 { color: #4a90e2; margin-bottom: 20px; }
+#settings label { display: block; margin: 12px 0; text-align: left; font-size: 14px; }
+#settings input[type="range"] { width: 200px; float: right; }
+#settings input[type="checkbox"] { margin-right: 8px; }
+#nameInput {
+  padding: 12px 20px; font-size: 18px;
+  border: 2px solid #4a90e2; background: #1a1a2e; color: #fff;
+  border-radius: 8px; margin-right: 10px; outline: none;
+}
+#playBtn, #settingsBtn, #closeSettings {
+  padding: 12px 30px; font-size: 18px;
+  background: #4a90e2; color: #fff; border: none;
+  border-radius: 8px; cursor: pointer; font-weight: bold;
+  transition: 0.2s; margin: 5px;
+}
+#settingsBtn, #closeSettings { background: #555; }
+#playBtn:hover { background: #357abd; transform: scale(1.05); }
+.info {
+  margin-top: 20px; padding: 15px;
+  background: rgba(74,144,226,0.1);
+  border-radius: 8px; font-size: 14px; line-height: 1.8;
+}
+#game {
+  background: #1a1a2e;
+  border: 2px solid #4a90e2;
+  border-radius: 8px;
+  display: block;
+  cursor: crosshair;
+  box-shadow: 0 0 40px rgba(74,144,226,0.3);
+}
+#hud {
+  position: absolute; top: 10px; left: 10px; right: 10px;
+  pointer-events: none; display: flex; justify-content: space-between;
+  font-size: 14px;
+}
+#roundInfo, #rankInfo {
+  background: rgba(0,0,0,0.7);
+  padding: 10px 16px; border-radius: 8px;
+  border: 1px solid rgba(74,144,226,0.3);
+}
+#mapName { font-weight: bold; color: #4a90e2; margin-bottom: 4px; }
+#rankName { font-weight: bold; color: #f1c40f; margin-bottom: 4px; }
+#xpBar {
+  width: 180px; height: 8px;
+  background: #333; border-radius: 4px; overflow: hidden;
+  margin: 4px 0;
+}
+#xpFill { height: 100%; background: linear-gradient(90deg, #f1c40f, #e67e22); width: 0%; transition: width 0.3s; }
+#xpText { font-size: 12px; color: #aaa; }
+#leaderboard {
+  background: rgba(0,0,0,0.7);
+  padding: 10px 14px; border-radius: 8px;
+  min-width: 200px; border: 1px solid rgba(74,144,226,0.3);
+}
+#leaderboard h3 { margin-bottom: 6px; color: #4a90e2; font-size: 13px; }
+.lb-row { display: flex; justify-content: space-between; padding: 2px 0; font-size: 12px; }
+.lb-row.me { color: #4a90e2; font-weight: bold; }
+
+#bottomHud {
+  position: absolute; bottom: 10px; left: 10px; right: 10px;
+  display: flex; align-items: flex-end; gap: 20px;
+  pointer-events: none;
+}
+#hpBar {
+  width: 280px; height: 28px;
+  background: rgba(0,0,0,0.7); border-radius: 14px;
+  overflow: hidden; border: 2px solid #333; position: relative;
+}
+#hpFill {
+  height: 100%;
+  background: linear-gradient(90deg, #e74c3c, #2ecc71);
+  transition: width 0.2s; width: 100%;
+}
+#hpText {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  font-weight: bold; text-shadow: 1px 1px 2px #000;
+  font-size: 13px;
+}
+#abilities { display: flex; gap: 10px; }
+.ability {
+  width: 60px; height: 60px;
+  background: rgba(0,0,0,0.7);
+  border: 2px solid #4a90e2;
+  border-radius: 10px;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  transition: 0.2s;
+}
+.ability.on-cd { border-color: #555; opacity: 0.6; }
+.ability .ab-cd {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.7);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: bold;
+  color: #fff;
+}
+.ability::before {
+  content: attr(data-key);
+  position: absolute; top: -8px; left: -8px;
+  background: #4a90e2; color: #fff;
+  width: 22px; height: 22px; border-radius: 50%;
+  font-size: 12px; font-weight: bold;
+  display: flex; align-items: center; justify-content: center;
+}
+#upgrades {
+  display: flex; gap: 4px; flex-wrap: wrap;
+  max-width: 400px; margin-left: auto;
+}
+.upgrade-badge {
+  background: rgba(0,0,0,0.7);
+  padding: 4px 10px; border-radius: 12px;
+  font-size: 11px; border: 1px solid #4a90e2;
+}
+
+#bossHud {
+  position: absolute; top: 80px; left: 50%;
+  transform: translateX(-50%);
+  text-align: center; pointer-events: none;
+  background: rgba(0,0,0,0.7);
+  padding: 10px 30px; border-radius: 10px;
+  border: 2px solid #e74c3c;
+}
+#bossName { color: #e74c3c; font-weight: bold; font-size: 18px; margin-bottom: 6px; }
+#bossHpBar {
+  width: 400px; height: 14px;
+  background: #333; border-radius: 7px; overflow: hidden;
+}
+#bossHpFill {
+  height: 100%;
+  background: linear-gradient(90deg, #c0392b, #e74c3c);
+  width: 100%; transition: width 0.2s;
+}
+#bossHpText { font-size: 12px; color: #aaa; margin-top: 4px; }
+
+#events {
+  position: absolute; top: 30%; left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none; text-align: center;
+}
+.event-msg {
+  animation: fadeUp 2.5s forwards;
+  text-shadow: 2px 2px 4px #000;
+  margin: 5px 0; font-size: 22px; font-weight: bold;
+}
+@keyframes fadeUp {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-40px); }
+}
+
+#roundEnd {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  background: rgba(10,10,30,0.97);
+  padding: 40px; border-radius: 16px;
+  border: 2px solid #4a90e2;
+  text-align: center; min-width: 450px;
+  z-index: 50;
+}
+#roundEnd h2 { color: #4a90e2; margin-bottom: 20px; font-size: 32px; }
+.final-row {
+  padding: 10px; margin: 4px 0;
+  background: rgba(74,144,226,0.2);
+  border-radius: 6px;
+  display: flex; justify-content: space-between;
+}
+.final-row:first-child { background: rgba(255,215,0,0.3); font-weight: bold; }
+.hidden { display: none !important; }
